@@ -36,5 +36,9 @@ feature "Invoices" do
       expect(page).to have_content "100"
       expect(page).to have_content "12.5"
     end
+
+    visit root_path
+    expect(page).to have_selector ".product .name", text: articles[7].name
+    expect(page).to have_selector ".product .price", text: "12.5"
   end
 end

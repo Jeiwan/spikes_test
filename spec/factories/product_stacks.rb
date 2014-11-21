@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :product_stack do
-    product_id 1
     quantity 1
+    product
   end
 end

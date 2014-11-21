@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141121184819) do
+ActiveRecord::Schema.define(version: 20141121192248) do
 
   create_table "admin_invoice_positions", force: true do |t|
     t.integer  "article_id"
@@ -51,8 +51,10 @@ ActiveRecord::Schema.define(version: 20141121184819) do
     t.integer  "product_stack_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "article_id"
   end
 
+  add_index "products", ["article_id"], name: "index_products_on_article_id", using: :btree
   add_index "products", ["product_stack_id"], name: "index_products_on_product_stack_id", using: :btree
 
   create_table "users", force: true do |t|
