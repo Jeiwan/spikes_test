@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141121125232) do
+ActiveRecord::Schema.define(version: 20141121181012) do
 
   create_table "admin_invoice_positions", force: true do |t|
     t.integer  "article_id"
@@ -29,6 +29,25 @@ ActiveRecord::Schema.define(version: 20141121125232) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "product_stacks", force: true do |t|
+    t.integer  "product_id"
+    t.integer  "quantity"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "product_stacks", ["product_id"], name: "index_product_stacks_on_product_id", using: :btree
+
+  create_table "products", force: true do |t|
+    t.string   "name"
+    t.float    "price",            limit: 24
+    t.integer  "product_stack_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "products", ["product_stack_id"], name: "index_products_on_product_stack_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "username",               default: "",    null: false

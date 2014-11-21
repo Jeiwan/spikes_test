@@ -5,5 +5,5 @@ Rails.application.routes.draw do
     resources :invoices, only: [:index, :new, :create]
   end
 
-  root to: 'admin/invoices#index'
+  root to: 'products#index'
 end
