@@ -8,9 +8,9 @@ feature "" do
   end
 
   scenario "Admin visit invoices page" do
-    visit admin_invoices
+    visit admin_invoices_path
 
-    expect(page).to have_content "New Invoice"
+    expect(page).to have_content "Приходовать новую накладную"
   end
 
 end
