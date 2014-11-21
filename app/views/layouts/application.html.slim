@@ -8,10 +8,25 @@ html lang="en"
     = javascript_include_tag  'application'
     = csrf_meta_tags
   body
-    - flash.each do |f, v|
-      - f = "success" if f == "notice"
-      - f = "danger" if f == "alert"
-      p class="alert alert-#{f}"
-        = v
+    nav.navbar.navbar-inverse
+      .container
+        .navbar-header
+          = link_to "7Pikes Test", root_path, class: "navbar-brand"
+        ul.nav.navbar-nav.navbar-right
+          - unless user_signed_in?
+            li
+              = link_to "Sign up", new_user_registration_path
+            li
+              = link_to "Log in", new_user_session_path
+          - else
+            li
+              p#current_user.navbar-text data-current-user="#{current_user.username}"
+                | Signed in as  
+                = link_to current_user.username, user_path(current_user.username)
+                |.  
+                = link_to "Log out", destroy_user_session_path, method: :delete
     .container
-      = yield
+      header
+        = render 'layouts/flash'
+      section
+        = yield
