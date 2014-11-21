@@ -11,7 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141121112744) do
+ActiveRecord::Schema.define(version: 20141121125232) do
+
+  create_table "admin_invoice_positions", force: true do |t|
+    t.integer  "article_id"
+    t.integer  "invoice_id"
+    t.integer  "quantity"
+    t.float    "price",      limit: 24
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "admin_invoice_positions", ["article_id"], name: "index_admin_invoice_positions_on_article_id", using: :btree
+  add_index "admin_invoice_positions", ["invoice_id"], name: "index_admin_invoice_positions_on_invoice_id", using: :btree
+
+  create_table "admin_invoices", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "username",               default: "",    null: false

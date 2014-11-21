@@ -21,6 +21,7 @@ group :test do
 end
 
 gem 'cancancan'
+gem 'cocoon'
 gem 'coffee-rails'
 gem 'devise'
 gem 'jbuilder'

@@ -1,2 +1,2 @@
-module InvoicesHelper
+module Admin::InvoicesHelper
 end

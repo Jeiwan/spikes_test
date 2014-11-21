@@ -12,5 +12,4 @@ feature "" do
 
     expect(page).to have_content "Приходовать новую накладную"
   end
-
 end
