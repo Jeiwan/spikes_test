@@ -1,34 +1,36 @@
 source 'https://rubygems.org'
 gem 'rails', '4.1.6'
 
-group :development, :test do
-	gem 'sqlite3'
-end
+gem 'mysql2'
 
-group :production do
-	gem 'pg'
+group :development do
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'quiet_assets'
 end
 
 group :test do
-	gem 'rspec-rails'
 	gem 'capybara'
+  gem 'capybara-webkit'
 	gem 'cucumber-rails', require: false
-	gem 'factory_girl_rails'
 	gem 'database_cleaner'
+	gem 'factory_girl_rails'
 	gem 'faker'
+	gem 'rspec-rails'
+	gem 'shoulda-matchers'
 end
 
-#gem 'will_paginate'
-#gem 'will_paginate-bootstrap'
-
-gem 'sass-rails'
-gem 'uglifier'
+gem 'cancancan'
 gem 'coffee-rails'
-gem 'therubyracer'
-
-gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git', branch: 'bootstrap3'
-gem 'less-rails'
-gem 'slim-rails'
-
-gem 'jquery-rails'
+gem 'devise'
 gem 'jbuilder'
+gem 'jquery-rails'
+gem 'kaminari'
+gem 'less-rails'
+gem 'responders'
+gem 'sass-rails'
+gem 'simple_form', git: 'https://github.com/plataformatec/simple_form'
+gem 'slim-rails'
+gem 'therubyracer'
+gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git', branch: 'bootstrap3'
+gem 'uglifier'

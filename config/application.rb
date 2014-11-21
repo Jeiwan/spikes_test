@@ -20,9 +20,12 @@ module DefaultApp
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 		config.sass.preferred_syntax = :sass
+    config.responders.flash_keys = [ :success, :danger ]
 
 		config.generators do |g|
 			g.template_engine :slim
+			g.test_framework :rspec, fixtures: true, view_specs: false, helper_specs: false, routing_specs: false, request_specs: false, controller_specs: true
+			g.fixture_replacement :factory_girl, dir: 'spec/factories'
 		end
   end
 end
