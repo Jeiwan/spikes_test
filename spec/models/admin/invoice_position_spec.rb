@@ -8,5 +8,7 @@ RSpec.describe Admin::InvoicePosition, :type => :model do
   it { is_expected.to validate_numericality_of :article_id }
   it { is_expected.to validate_numericality_of :quantity }
   it { is_expected.to validate_numericality_of :price }
+  it { is_expected.to belong_to :invoice }
+  it { is_expected.to belong_to :article }
 
 end

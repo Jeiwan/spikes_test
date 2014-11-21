@@ -1,5 +1,6 @@
 class Admin::InvoicesController < ApplicationController
   def index
+    @articles = Article.all
     @invoice = Admin::Invoice.new
     @invoices = Admin::Invoice.all.order(created_at: :desc).page(params[:page])
   end

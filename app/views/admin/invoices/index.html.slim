@@ -1,4 +1,4 @@
-h1 Накладные  
+h1 Накладные
 
 = link_to "Приходовать новую накладную", "#", class: "btn btn-primary"
 = simple_form_for Admin::Invoice.new do |f|
@@ -23,7 +23,7 @@ table.all-invoices.table
       - invoice.invoice_positions.each_with_index do |position, index|
           tr
             td = index == 0 ? invoice.created_at.strftime("%R %D") : ''
-            td = position.article_id
+            td = position.article.name
             td = position.quantity
             td = position.price
 
