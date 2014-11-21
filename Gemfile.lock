@@ -46,6 +46,7 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
+    addressable (2.3.6)
     arel (5.0.1.20140414130214)
     bcrypt (3.1.9)
     better_errors (2.0.0)
@@ -120,6 +121,8 @@ GEM
     kaminari (0.16.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
+    launchy (2.4.2)
+      addressable (~> 2.3)
     less (2.5.1)
       commonjs (~> 0.2.7)
     less-rails (2.5.0)
@@ -238,6 +241,7 @@ DEPENDENCIES
   jbuilder
   jquery-rails
   kaminari
+  launchy
   less-rails
   mysql2
   quiet_assets

@@ -2,6 +2,6 @@
 
 FactoryGirl.define do
   factory :admin_invoice, :class => 'Admin::Invoice' do
-    completed false
+    invoice_positions { build_list(:admin_invoice_position, 3) }
   end
 end

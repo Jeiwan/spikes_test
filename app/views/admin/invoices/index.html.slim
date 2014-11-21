@@ -1,5 +1,30 @@
-h1 Накладные
+h1 Накладные  
 
-= link_to "Приходовать новую накладную", "#", class: "btn btn-success"
-/= simple_form_for Admin::Invoice.new do |f|
-  /= f
+= link_to "Приходовать новую накладную", "#", class: "btn btn-primary"
+= simple_form_for Admin::Invoice.new do |f|
+  = f.error_notification
+  h3 Товары
+  #products
+    = f.simple_fields_for :invoice_positions, @invoice.invoice_positions  do |invoice_position|
+      = render 'invoice_position_fields', f: invoice_position
+    .links
+      = link_to_add_association 'Добавить позицию', f, :invoice_positions
+  = f.submit 'Приходовать', class: 'btn btn-success'
+
+table.all-invoices.table
+  thead
+    tr
+      th Дата
+      th Наименование
+      th Количество
+      th Цена
+  tbody
+    - @invoices.each do |invoice|
+      - invoice.invoice_positions.each_with_index do |position, index|
+          tr
+            td = index == 0 ? invoice.created_at.strftime("%R %D") : ''
+            td = position.article_id
+            td = position.quantity
+            td = position.price
+
+= paginate @invoices

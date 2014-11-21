@@ -8,5 +8,10 @@ html lang="en"
     = javascript_include_tag  'application'
     = csrf_meta_tags
   body
+    - flash.each do |f, v|
+      - f = "success" if f == "notice"
+      - f = "danger" if f == "alert"
+      p class="alert alert-#{f}"
+        = v
     .container
       = yield
