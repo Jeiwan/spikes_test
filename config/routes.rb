@@ -2,7 +2,8 @@ Rails.application.routes.draw do
   devise_for :users
 
   namespace :admin do
-    resources :invoices, only: [:index, :new, :create]
+    resources :invoices, only: [:index, :create]
+    resources :requests, only: [:index, :create]
   end
 
   resources :users, only: [:show]

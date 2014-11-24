@@ -1,0 +1,28 @@
+h1 Заявки на поставку
+
+= link_to "Создать заявку", "#", class: "btn btn-primary"
+= simple_form_for Admin::Request.new do |f|
+  = f.error_notification
+  h3 Товары
+  #products
+    = f.simple_fields_for :request_positions, @request.request_positions  do |request_position|
+      = render "request_position_fields", f: request_position
+    .links
+      = link_to_add_association "Добавить позицию", f, :request_positions
+  = f.submit "Создать", class: "btn btn-success"
+
+table.all-requests.table
+  thead
+    tr
+      th Дата
+      th Наименование
+      th Количество
+  tbody
+    - @requests.each do |request|
+      - request.request_positions.each_with_index do |position, index|
+          tr
+            td = index == 0 ? request.created_at.strftime("%R %D") : ''
+            td = position.article.name
+            td = position.quantity
+
+= paginate @requests

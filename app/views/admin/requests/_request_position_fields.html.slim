@@ -1,0 +1,4 @@
+.nested-fields
+  = f.input :article_id, collection: @articles, label: "Наименование"
+  = f.input :quantity, label: "Количество"
+  = link_to_remove_association "Удалить позицию", f
