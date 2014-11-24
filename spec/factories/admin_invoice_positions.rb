@@ -2,8 +2,8 @@
 
 FactoryGirl.define do
   factory :admin_invoice_position, :class => 'Admin::InvoicePosition' do
-    article_id 1
     quantity 4
     price 1.5
+    article
   end
 end

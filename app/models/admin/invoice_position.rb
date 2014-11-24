@@ -15,7 +15,7 @@ class Admin::InvoicePosition < ActiveRecord::Base
       product = Product.find_or_initialize_by(article_id: article_id)
       if product.new_record?
         product_stack = ProductStack.create(quantity: quantity)
-        product_stack.create_product(article_id: article_id, name: article.name, price: price)
+        product_stack.create_product(article_id: article_id, name: self.article.name, price: price)
       else
         product.product_stack.increment!(:quantity, quantity)
       end

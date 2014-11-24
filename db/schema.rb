@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141121192248) do
+ActiveRecord::Schema.define(version: 20141124090625) do
 
   create_table "admin_invoice_positions", force: true do |t|
     t.integer  "article_id"
@@ -35,6 +35,26 @@ ActiveRecord::Schema.define(version: 20141121192248) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "order_positions", force: true do |t|
+    t.integer  "article_id"
+    t.integer  "order_id"
+    t.integer  "quantity",              null: false
+    t.float    "price",      limit: 24, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "order_positions", ["article_id"], name: "index_order_positions_on_article_id", using: :btree
+  add_index "order_positions", ["order_id"], name: "index_order_positions_on_order_id", using: :btree
+
+  create_table "orders", force: true do |t|
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
 
   create_table "product_stacks", force: true do |t|
     t.integer  "product_id"

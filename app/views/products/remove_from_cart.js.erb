@@ -1,0 +1,7 @@
+$("#product_<%= params['product_id'] %>").remove();
+$.notify("Товар убран из корзины", "success");
+
+if ($("#cart tbody").is(":empty")) {
+  $("#cart").remove();
+  $("h1").after("Корзина пуста");
+}
