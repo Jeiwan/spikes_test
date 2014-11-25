@@ -1,17 +1,6 @@
-h1 Накладные
-
-= link_to "Приходовать новую накладную", "#", class: "btn btn-primary"
-= simple_form_for Admin::Invoice.new do |f|
-  = f.error_notification
-  h3 Товары
-  #products
-    = f.simple_fields_for :invoice_positions, @invoice.invoice_positions  do |invoice_position|
-      = render 'invoice_position_fields', f: invoice_position
-    .links
-      = link_to_add_association 'Добавить позицию', f, :invoice_positions
-  - if params[:from_request]
-    = f.hidden_field :request_id, value: params[:from_request]
-  = f.submit 'Приходовать', class: 'btn btn-success'
+h1
+  |Накладные
+  = link_to "Приходовать новую накладную", "#", class: "btn btn-primary"
 
 table.all-invoices.table
   thead

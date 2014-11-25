@@ -2,8 +2,10 @@ Rails.application.routes.draw do
   devise_for :users
 
   namespace :admin do
-    resources :invoices, only: [:index, :create]
-    resources :requests, only: [:index, :create]
+    resources :invoices, only: [:index, :new, :create]
+    resources :requests, only: [:index, :new, :create] do
+      resources :invoices, only: [:new, :create]
+    end
     patch "/settings/threshold" => "settings#set_threshold", as: :settings_threshold
     post "/requests/merge" => "requests#merge", as: :merge_requests
   end

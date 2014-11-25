@@ -1,4 +1,6 @@
-h1 Заявки на поставку
+h1
+  |Заявки на поставку
+  = link_to "Создать заявку", "#", class: "btn btn-primary"
 
 = form_tag admin_settings_threshold_path, id: "quantity_threshold", method: :patch, remote: true, type: :js
   .row
@@ -13,17 +15,6 @@ h1 Заявки на поставку
         span.no.text-danger
           span.glyphicon.glyphicon-remove
           span.message Ошибка
-
-= link_to "Создать заявку", "#", class: "btn btn-primary"
-= simple_form_for Admin::Request.new do |f|
-  = f.error_notification
-  h3 Товары
-  #products
-    = f.simple_fields_for :request_positions, @request.request_positions  do |request_position|
-      = render "request_position_fields", f: request_position
-    .links
-      = link_to_add_association "Добавить позицию", f, :request_positions
-  = f.submit "Создать", class: "btn btn-success"
 
 = form_tag "requests/merge"
   table.all-requests.table

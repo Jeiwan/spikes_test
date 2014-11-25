@@ -19,10 +19,9 @@ feature "Requests" do
   end
 
   scenario "Admin creates a new request", js: true do
-    visit admin_requests_path
+    visit new_admin_request_path
 
     expect(page).to have_selector "form#new_admin_request"
-    click_link "Добавить позицию"
 
     within("#products .nested-fields:first-child") do
       select articles[1].name, from: "Наименование"
@@ -36,6 +35,14 @@ feature "Requests" do
       expect(page).to have_content articles[1].name
       expect(page).to have_content "100"
     end
+  end
+
+  scenario "Admin creates a new request without filling necessary fields", js: true do
+    visit new_admin_request_path
+
+    click_button "Создать"
+
+    expect(page).to have_content "Ошибка"
   end
 
   scenario "Admin sets default quantity threshold for all products", js: true do
@@ -63,7 +70,7 @@ feature "Requests" do
       click_link "Приходовать"
     end
 
-    expect(page.current_path).to match /\A\/admin\/invoices/
+    expect(page.current_path).to match /\A\/admin\/requests\/\d+\/invoices\/new\z/
     expect(page).to have_selector "#products > .nested-fields", count: 2
 
     within("#products > .nested-fields:first-child") do

@@ -17,10 +17,9 @@ feature "Invoices" do
   end
 
   scenario "Admin adds a new invoice", js: true do
-    visit admin_invoices_path
+    visit new_admin_invoice_path
 
     expect(page).to have_selector "form#new_admin_invoice"
-    click_link "Добавить позицию"
 
     within("#products .nested-fields:first-child") do
       select articles[7].name, from: "Наименование"
@@ -40,5 +39,13 @@ feature "Invoices" do
     visit root_path
     expect(page).to have_selector ".product .name", text: articles[7].name
     expect(page).to have_selector ".product .price", text: "12.5"
+  end
+
+  scenario "Admin adds a new invoice without filling necessary fields", js: true do
+    visit new_admin_invoice_path
+
+    click_button "Приходовать"
+
+    expect(page).to have_content "Ошибка"
   end
 end

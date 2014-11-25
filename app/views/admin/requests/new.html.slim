@@ -1,0 +1,9 @@
+= simple_form_for @request do |f|
+  = f.error_notification
+  h3 Товары
+  #products
+    = f.simple_fields_for :request_positions do |request_position|
+      = render "request_position_fields", f: request_position
+    .links
+      = link_to_add_association "Добавить позицию", f, :request_positions
+  = f.submit "Создать", class: "btn btn-success"

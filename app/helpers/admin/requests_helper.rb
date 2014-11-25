@@ -15,7 +15,7 @@ module Admin::RequestsHelper
     when 'fresh'
       raw("#{link_to 'Редактировать', '#'} | #{link_to 'Подтвердить', '#'}")
     when 'pending'
-      link_to 'Приходовать', admin_invoices_path(from_request: request.id)
+      link_to 'Приходовать', new_admin_request_invoice_path(request.id)
     when 'executed'
     end
   end

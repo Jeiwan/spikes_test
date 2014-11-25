@@ -5,9 +5,13 @@ class Admin::RequestsController < ApplicationController
   authorize_resource
 
   def index
+    @requests = Admin::Request.all.order(created_at: :desc).page(params[:page])
+  end
+
+  def new
     @articles = Article.all
     @request = Admin::Request.new
-    @requests = Admin::Request.all.order(created_at: :desc).page(params[:page])
+    @request.request_positions.new
   end
 
   def create
@@ -19,7 +23,7 @@ class Admin::RequestsController < ApplicationController
       redirect_to admin_requests_path
     else
       flash.now[:danger] = "Ошибка в создании запроса"
-      render :index
+      render :new
     end
   end
 
