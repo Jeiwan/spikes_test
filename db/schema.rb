@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141125090849) do
+ActiveRecord::Schema.define(version: 20141125095331) do
 
   create_table "admin_invoice_positions", force: true do |t|
     t.integer  "article_id"
@@ -90,6 +90,7 @@ ActiveRecord::Schema.define(version: 20141125090849) do
     t.integer  "quantity"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "quantity_threshold"
   end
 
   add_index "product_stacks", ["product_id"], name: "index_product_stacks_on_product_id", using: :btree

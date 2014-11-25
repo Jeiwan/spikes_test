@@ -8,7 +8,7 @@ class ProductStack < ActiveRecord::Base
     
     def check_limits_and_make_request
       if quantity_changed?
-        limit = Admin::Setting.find_by(name: "quantity_threshold").value.to_i
+        limit = quantity_threshold || Admin::Setting.find_by(name: "quantity_threshold").value.to_i
         if quantity <= limit
           unless Admin::RequestPosition.find_by(article_id: product.article_id)
             new_request = Admin::Request.create(status: 0)
