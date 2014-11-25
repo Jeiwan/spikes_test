@@ -1,6 +1,6 @@
 h1 Заявки на поставку
 
-= form_tag admin_settings_threshold_path, id: "quantity_threshold", remote: true, type: :js
+= form_tag admin_settings_threshold_path, id: "quantity_threshold", method: :patch, remote: true, type: :js
   .row
     .col-md-12
       = label_tag "Минимальное количество товара, после достижения которого автоматически создается заявка на поставку:"
@@ -25,22 +25,26 @@ h1 Заявки на поставку
       = link_to_add_association "Добавить позицию", f, :request_positions
   = f.submit "Создать", class: "btn btn-success"
 
-table.all-requests.table
-  thead
-    tr
-      th Статус
-      th Дата
-      th Наименование
-      th Количество
-      th
-  tbody
-    - @requests.each do |request|
-      - request.request_positions.each_with_index do |position, index|
-          tr
-            td = index == 0 ? request_status(request.status) : ''
-            td = index == 0 ? request.created_at.strftime("%R %D") : ''
-            td = position.article.name
-            td = position.quantity
-            td = index == 0 ? request_controls(request) : ''
+= form_tag "requests/merge"
+  table.all-requests.table
+    thead
+      tr
+        th
+        th Статус
+        th Дата
+        th Наименование
+        th Количество
+        th
+    tbody
+      - @requests.each do |request|
+        - request.request_positions.each_with_index do |position, index|
+            tr class="#{ index == 0 ? request.status : ''}"
+              td = (index == 0 && request.fresh?) ? (check_box_tag 'merge_requests[]', request.id, false, id: "merge_request_#{request.id}") : ''
+              td = index == 0 ? request_status(request.status) : ''
+              td = index == 0 ? request.created_at.strftime("%R %D") : ''
+              td = position.article.name
+              td = position.quantity
+              td = index == 0 ? request_controls(request) : ''
+  = submit_tag "Объединить заявки"
 
 = paginate @requests

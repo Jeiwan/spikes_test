@@ -3,6 +3,6 @@
 FactoryGirl.define do
   factory :admin_request_position, :class => 'Admin::RequestPosition' do
     quantity 1
-    article
+    article { build(:article) }
   end
 end

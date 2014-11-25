@@ -1,11 +1,16 @@
 class ProductsController < ApplicationController
-  before_action :authenticate_user!, only: [:add_to_cart, :remove_from_cart]
-  respond_to :js, only: [:add_to_cart, :remove_from_cart]
+  before_action :authenticate_user!, except: :index
+  respond_to :js, except: [:index, :index_admin]
 
   authorize_resource
 
   def index
     @products = Product.page(params[:page])
+  end
+
+  def index_admin
+    @products = Product.page(params[:page])
+    render "admin/products/index"
   end
 
   def add_to_cart
@@ -22,4 +27,16 @@ class ProductsController < ApplicationController
       session[:cart].reject! { |product| product["id"] == params["product_id"].to_i  }
     end
   end
+
+  def set_quantity_threshold
+    @product = Product.find(params[:id])
+    @product.product_stack.update!(product_stack_params)
+    render "admin/products/set_quantity_threshold"
+  end
+
+  private
+  
+    def product_stack_params
+      params.require(:product_stack).permit(:quantity_threshold)
+    end
 end

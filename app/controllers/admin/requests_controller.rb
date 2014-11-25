@@ -1,5 +1,8 @@
 class Admin::RequestsController < ApplicationController
+  before_action :authenticate_user!
   before_action :load_settings, only: [:index]
+
+  authorize_resource
 
   def index
     @articles = Article.all
@@ -20,10 +23,19 @@ class Admin::RequestsController < ApplicationController
     end
   end
 
+  def merge
+    if params[:merge_requests]
+      Admin::Request.merge(params[:merge_requests])
+
+      flash[:success] = "Запросы объединены"
+      redirect_to admin_requests_path
+    end
+  end
+
   private
 
     def request_params
-      params.require(:admin_request).permit(request_positions_attributes: [:article_id, :quantity, :executed, :_destroy])
+      params.require(:admin_request).permit(request_positions_attributes: [:article_id, :quantity, :_destroy])
     end
 
     def load_settings

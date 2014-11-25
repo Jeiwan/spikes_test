@@ -79,7 +79,8 @@ feature "Requests" do
     expect(page).to have_content "Накладная приходована"
 
     visit admin_requests_path
-    expect(page).to have_selector ".all-requests tbody tr:first-child td:first-child", text: "Выполнена"
+    expect(page).to have_selector ".all-requests tbody tr.executed", count: 1
+    expect(page).to have_selector ".all-requests tbody tr.executed", text: "Выполнена"
   end
 
   scenario "A new request is created after user's bought a limited product", js: true do
@@ -108,5 +109,19 @@ feature "Requests" do
       expect(page).to have_link "Редактировать"
       expect(page).to have_link "Подтвердить"
     end
+  end
+
+  given!(:fresh_requests) { create_list(:admin_request, 2) }
+  scenario "Admin merges new requests", js: true do
+    visit admin_requests_path
+
+    expect(page).to have_selector "tr.fresh", count: 2
+
+    check "merge_request_#{fresh_requests[0].id}"
+    check "merge_request_#{fresh_requests[1].id}"
+    click_button "Объединить заявки"
+
+    expect(page).to have_content "объединены"
+    expect(page).to have_selector "tr.fresh", count: 1
   end
 end

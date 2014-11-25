@@ -21,6 +21,38 @@ RSpec.describe ProductsController, :type => :controller do
     end
   end
 
+  describe "GET #index_admin" do
+    let(:products) { create_list(:product, 2) }
+
+    let(:get_index_admin) { get :index_admin  }
+
+    before { get_index_admin  }
+
+    context "when signed in as admin", sign_in: true do
+      let(:user) { create(:user, admin: true) }
+
+      it "returns all products" do
+        expect(assigns(:products)).to match_array products
+      end
+
+      it "renders index view" do
+        expect(response).to render_template 'admin/products/index'
+      end
+    end
+
+    context "when signed in as user", sign_in: true do
+      it "redirects to root_path" do
+        expect(response).to redirect_to root_path
+      end
+    end
+
+    context "when not signed in" do
+      it "redirects to login page" do
+        expect(response).to redirect_to new_user_session_path
+      end
+    end
+  end
+
   describe "POST #add_to_cart" do
     let(:product) { create(:product) }
     let(:post_add_to_cart) do
@@ -41,6 +73,41 @@ RSpec.describe ProductsController, :type => :controller do
 
     context "when not signed in" do
       it "returns 401 status code" do
+        expect(response.status).to eq 401
+      end
+    end
+  end
+
+  describe "PATCH #set_quantity_threshold" do
+    let(:product) { create(:product) }
+    let(:patch_set_quantity_threshold) do
+      patch :set_quantity_threshold, id: product.id, product_stack: { quantity_threshold: 50 }, format: :js
+    end
+
+    context "when signed in", sign_in: true do
+      context "when admin" do
+        let(:user) { create(:user, admin: true) }
+        it "updates product stack" do
+          patch_set_quantity_threshold
+          expect(product.product_stack.reload.quantity_threshold).to eq 50
+        end
+
+        it "renders set_quantity_threshold" do
+          patch_set_quantity_threshold
+          expect(response).to render_template "admin/products/set_quantity_threshold"
+        end
+      end
+
+      context "when user" do
+        it "returns 401 status code" do
+          patch_set_quantity_threshold
+          expect(response.status).to eq 401
+        end
+      end
+    end
+    context "when not signed in" do
+      it "returns 401 status code" do
+        patch_set_quantity_threshold
         expect(response.status).to eq 401
       end
     end

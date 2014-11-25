@@ -4,7 +4,12 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :invoices, only: [:index, :create]
     resources :requests, only: [:index, :create]
-    post "/settings/threshold" => "settings#set_threshold", as: :settings_threshold
+    patch "/settings/threshold" => "settings#set_threshold", as: :settings_threshold
+    post "/requests/merge" => "requests#merge", as: :merge_requests
+  end
+  scope :admin do
+    get "/products" => "products#index_admin", as: :admin_products
+    patch "/products/:id/set_quantity_threshold" => "products#set_quantity_threshold", as: :admin_set_product_quantity_threshold
   end
 
   resources :users, only: [:show]
