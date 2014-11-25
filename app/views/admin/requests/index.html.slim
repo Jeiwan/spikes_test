@@ -37,12 +37,10 @@ table.all-requests.table
     - @requests.each do |request|
       - request.request_positions.each_with_index do |position, index|
           tr
-            td = index == 0 ? (request.executed? ? 'Выполнена' : 'Ожидание') : ''
+            td = index == 0 ? request_status(request.status) : ''
             td = index == 0 ? request.created_at.strftime("%R %D") : ''
             td = position.article.name
             td = position.quantity
-            td
-              - if index == 0 && !request.executed?
-                = link_to "Приходовать", admin_invoices_path(from_request: request.id)
+            td = index == 0 ? request_controls(request) : ''
 
 = paginate @requests

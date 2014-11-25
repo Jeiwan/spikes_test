@@ -12,7 +12,7 @@ class Admin::Invoice < ActiveRecord::Base
 
     def execute_request
       unless self.request_id.nil?
-        request.update(executed: true)
+        request.executed!
       end
     end
 end

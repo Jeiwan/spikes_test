@@ -31,8 +31,8 @@ RSpec.describe OrdersController, :type => :controller do
 
         it "decrements product quantity" do
           post_create
-          expect(product1.product_stack.reload.quantity).to eq 9
-          expect(product2.product_stack.reload.quantity).to eq 9
+          expect(product1.product_stack.reload.quantity).to eq 10
+          expect(product2.product_stack.reload.quantity).to eq 10
         end
 
         it "redirects to root_path" do

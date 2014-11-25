@@ -1,9 +1,11 @@
 require_relative "../features_helper"
 
 feature "Requests" do
+  given(:user) { create(:user) }
   given(:admin) { create(:user, admin: true) }
   given!(:articles) { create_list(:article, 2) }
-  given!(:product_request) { create(:admin_request)  }
+  given!(:product_request) { create(:admin_request, status: 1)  }
+  given!(:product) { create(:product, article: articles[0]) }
 
   before do
     sign_in admin
@@ -78,5 +80,33 @@ feature "Requests" do
 
     visit admin_requests_path
     expect(page).to have_selector ".all-requests tbody tr:first-child td:first-child", text: "Выполнена"
+  end
+
+  scenario "A new request is created after user's bought a limited product", js: true do
+    visit root_path
+    click_link "Log out"
+
+    sign_in user
+    visit root_path
+    expect(page).to have_selector ".product", count: 1
+    within(".product") do
+      expect(page).to have_link "В корзину"
+      click_link "В корзину"
+      expect(page).to have_content "В корзине"
+    end
+    click_link "Корзина"
+    click_link "Оформить"
+
+    visit root_path
+    click_link "Log out"
+
+    sign_in admin
+    visit admin_requests_path
+    within(".all-requests") do
+      expect(page).to have_content product.article.name
+      expect(page).to have_content "Новая"
+      expect(page).to have_link "Редактировать"
+      expect(page).to have_link "Подтвердить"
+    end
   end
 end

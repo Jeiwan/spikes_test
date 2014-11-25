@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141124150635) do
+ActiveRecord::Schema.define(version: 20141125090849) do
 
   create_table "admin_invoice_positions", force: true do |t|
     t.integer  "article_id"
@@ -45,10 +45,12 @@ ActiveRecord::Schema.define(version: 20141124150635) do
   add_index "admin_request_positions", ["request_id"], name: "index_admin_request_positions_on_request_id", using: :btree
 
   create_table "admin_requests", force: true do |t|
-    t.boolean  "executed",   default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "status",     default: 0, null: false
   end
+
+  add_index "admin_requests", ["status"], name: "index_admin_requests_on_status", using: :btree
 
   create_table "admin_settings", force: true do |t|
     t.string   "name"

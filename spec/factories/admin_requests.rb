@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :admin_request, :class => 'Admin::Request' do
-    executed false
+    status 0
     request_positions { build_list(:admin_request_position, 2) }
   end
 end
