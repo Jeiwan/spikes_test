@@ -16,7 +16,6 @@ describe Ability do
 
   describe "user" do
     let(:user) { create(:user) }
-    let(:user2) { create(:user) }
 
     it_behaves_like "guest abilities"
 
@@ -24,5 +23,11 @@ describe Ability do
     it { is_expected.to be_able_to :add_to_cart, Product }
     it { is_expected.to be_able_to :remove_from_cart, Product }
     it { is_expected.to be_able_to :cart, User }
+  end
+
+  describe "admin" do
+    let(:user) { create(:user, admin: true) }
+
+    it { is_expected.to be_able_to :manage, :all }
   end
 end

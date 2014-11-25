@@ -1,4 +1,6 @@
 class Admin::RequestsController < ApplicationController
+  before_action :load_settings, only: [:index]
+
   def index
     @articles = Article.all
     @request = Admin::Request.new
@@ -21,6 +23,13 @@ class Admin::RequestsController < ApplicationController
   private
 
     def request_params
-      params.require(:admin_request).permit(request_positions_attributes: [:article_id, :quantity, :_destroy])
+      params.require(:admin_request).permit(request_positions_attributes: [:article_id, :quantity, :executed, :_destroy])
+    end
+
+    def load_settings
+      @settings = {}
+      Admin::Setting.find_each do |settings|
+        @settings[settings.name.to_sym] = settings.value
+      end
     end
 end

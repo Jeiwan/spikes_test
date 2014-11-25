@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141124113232) do
+ActiveRecord::Schema.define(version: 20141124150635) do
 
   create_table "admin_invoice_positions", force: true do |t|
     t.integer  "article_id"
@@ -28,7 +28,10 @@ ActiveRecord::Schema.define(version: 20141124113232) do
   create_table "admin_invoices", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "request_id"
   end
+
+  add_index "admin_invoices", ["request_id"], name: "index_admin_invoices_on_request_id", using: :btree
 
   create_table "admin_request_positions", force: true do |t|
     t.integer  "article_id"
@@ -43,6 +46,13 @@ ActiveRecord::Schema.define(version: 20141124113232) do
 
   create_table "admin_requests", force: true do |t|
     t.boolean  "executed",   default: false, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "admin_settings", force: true do |t|
+    t.string   "name"
+    t.string   "value"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

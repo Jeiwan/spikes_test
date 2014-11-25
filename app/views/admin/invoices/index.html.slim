@@ -9,6 +9,8 @@ h1 Накладные
       = render 'invoice_position_fields', f: invoice_position
     .links
       = link_to_add_association 'Добавить позицию', f, :invoice_positions
+  - if params[:from_request]
+    = f.hidden_field :request_id, value: params[:from_request]
   = f.submit 'Приходовать', class: 'btn btn-success'
 
 table.all-invoices.table

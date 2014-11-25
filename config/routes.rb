@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :invoices, only: [:index, :create]
     resources :requests, only: [:index, :create]
+    post "/settings/threshold" => "settings#set_threshold", as: :settings_threshold
   end
 
   resources :users, only: [:show]

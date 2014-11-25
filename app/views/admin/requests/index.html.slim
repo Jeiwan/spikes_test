@@ -1,5 +1,19 @@
 h1 Заявки на поставку
 
+= form_tag admin_settings_threshold_path, id: "quantity_threshold", remote: true, type: :js
+  .row
+    .col-md-12
+      = label_tag "Минимальное количество товара, после достижения которого автоматически создается заявка на поставку:"
+      = text_field_tag :threshold, @settings[:quantity_threshold]
+      = submit_tag "Установить"
+      span.status
+        span.ok.text-success
+          span.glyphicon.glyphicon-ok
+          span.message Установлено
+        span.no.text-danger
+          span.glyphicon.glyphicon-remove
+          span.message Ошибка
+
 = link_to "Создать заявку", "#", class: "btn btn-primary"
 = simple_form_for Admin::Request.new do |f|
   = f.error_notification
@@ -14,15 +28,21 @@ h1 Заявки на поставку
 table.all-requests.table
   thead
     tr
+      th Статус
       th Дата
       th Наименование
       th Количество
+      th
   tbody
     - @requests.each do |request|
       - request.request_positions.each_with_index do |position, index|
           tr
+            td = index == 0 ? (request.executed? ? 'Выполнена' : 'Ожидание') : ''
             td = index == 0 ? request.created_at.strftime("%R %D") : ''
             td = position.article.name
             td = position.quantity
+            td
+              - if index == 0 && !request.executed?
+                = link_to "Приходовать", admin_invoices_path(from_request: request.id)
 
 = paginate @requests

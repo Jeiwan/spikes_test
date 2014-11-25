@@ -6,7 +6,11 @@ class Ability
 
     @user = user
 
-    user_abilities
+    if user.admin?
+      admin_abilities
+    else
+      user_abilities
+    end
   end
 
   def guest_abilities
@@ -20,5 +24,9 @@ class Ability
     can :add_to_cart, Product
     can :remove_from_cart, Product
     can :cart, User
+  end
+
+  def admin_abilities
+    can :manage, :all
   end
 end
