@@ -13,7 +13,7 @@ RSpec.describe Product, :type => :model do
       let(:product) { create(:product) }
 
       it "decrements product's quantity" do
-        expect{Product.sell(product: product.id, quantity: 1)}.to change{product.reload.product_stack.quantity}.by(-1)
+        expect{product.sell(1)}.to change{product.reload.product_stack.quantity}.by(-1)
       end
     end
     
