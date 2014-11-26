@@ -8,4 +8,15 @@ RSpec.describe Product, :type => :model do
   it { is_expected.to validate_presence_of :price }
   it { is_expected.to validate_numericality_of :price }
 
+  describe "methods" do
+    describe ".sell({product: 1, quantity: 1})" do
+      let(:product) { create(:product) }
+
+      it "decrements product's quantity" do
+        expect{Product.sell(product: product.id, quantity: 1)}.to change{product.reload.product_stack.quantity}.by(-1)
+      end
+    end
+    
+  end
+
 end

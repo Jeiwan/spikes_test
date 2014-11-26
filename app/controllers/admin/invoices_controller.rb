@@ -1,4 +1,7 @@
 class Admin::InvoicesController < ApplicationController
+
+  authorize_resource
+
   def index
     @invoices = Admin::Invoice.all.order(created_at: :desc).page(params[:page])
   end

@@ -11,13 +11,7 @@ class OrdersController < ApplicationController
   def create
     unless session[:cart].blank?
       order = current_user.orders.create
-
-      session[:cart].each do |product|
-        order.order_positions.create(article_id: product['article'], quantity: product['quantity'], price: product['price'])
-        @product_stack = Product.find(product['id']).product_stack
-        @product_stack.decrement(:quantity, product['quantity'].to_i).save!
-      end
-
+      order.fill_from_cart(session[:cart])
       flash[:success] = "Заказ оформлен"
     end
     redirect_to root_path
