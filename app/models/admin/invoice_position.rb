@@ -1,7 +1,7 @@
 class Admin::InvoicePosition < ActiveRecord::Base
 
-  belongs_to :invoice
   belongs_to :article
+  belongs_to :invoice
 
   validates :article_id, presence: true, numericality: true
   validates :quantity, presence: true, numericality: true

@@ -78,6 +78,31 @@ RSpec.describe ProductsController, :type => :controller do
     end
   end
 
+  describe "POST #remove_from_cart" do
+    let(:product) { create(:product) }
+    let(:post_remove_from_cart) do
+      post :remove_from_cart, product_id: product.id, format: :js
+    end
+
+    before do
+      session[:cart] = []
+      session[:cart] << {name: product.name, id: product.id, article: product.article_id, stack: product.product_stack_id, price: product.price, quantity: 1}
+      post_remove_from_cart
+    end
+
+    context "when signed in", sign_in: true do
+      it "removes the product from the cart" do
+        expect(session[:cart]).to be_empty
+      end
+    end
+
+    context "when not signed in" do
+      it "returns 401 status code" do
+        expect(response.status).to eq 401
+      end
+    end
+  end
+
   describe "PATCH #set_quantity_threshold" do
     let(:product) { create(:product) }
     let(:patch_set_quantity_threshold) do

@@ -7,7 +7,6 @@ RSpec.describe Admin::Request, :type => :model do
   it { is_expected.to accept_nested_attributes_for :request_positions }
 
   describe "methods" do
-
     describe ".merge(requests)" do
       let!(:requests) { create_list(:admin_request, 2) }
 

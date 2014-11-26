@@ -22,9 +22,8 @@ class ProductsController < ApplicationController
   end
 
   def remove_from_cart
-    puts params
-    if params["product_id"]
-      session[:cart].reject! { |product| product["id"] == params["product_id"].to_i  }
+    if params[:product_id]
+      session[:cart].reject! { |product| product.with_indifferent_access[:id] == params[:product_id].to_i  }
     end
   end
 

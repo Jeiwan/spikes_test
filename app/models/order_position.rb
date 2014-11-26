@@ -1,7 +1,9 @@
 class OrderPosition < ActiveRecord::Base
-  belongs_to :order
-  belongs_to :article
 
-  validates :quantity, presence: true
-  validates :price, presence: true
+  belongs_to :article
+  belongs_to :order
+
+  validates :price, presence: true, numericality: true
+  validates :quantity, presence: true, numericality: true
+
 end

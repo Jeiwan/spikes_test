@@ -2,6 +2,9 @@ class ProductStack < ActiveRecord::Base
 
   has_one :product
 
+  validates :quantity, presence: true, numericality: true
+  validates :quantity_threshold, numericality: true, allow_nil: true
+
   after_update :check_limits_and_make_request
 
   private
