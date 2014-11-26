@@ -1,0 +1,77 @@
+h1 Админ-панель
+.row
+  .col-md-6
+    h2
+      |Накладные 
+      small
+        = link_to 'Все', admin_invoices_path
+    table.invoices.table
+      thead
+        tr
+          th Дата
+          th Наименование
+          th Количество
+          th Цена
+      tbody
+        - @invoices.each do |invoice|
+          - invoice.invoice_positions.each_with_index do |position, index|
+              tr
+                td = index == 0 ? invoice.created_at.strftime("%R %D") : ''
+                td = position.article.name
+                td = position.quantity
+                td = position.price
+  .col-md-6
+    h2
+      |Заявки 
+      small
+        = link_to 'Все', admin_requests_path
+    table.requests.table
+      thead
+        tr
+          th Статус
+          th Дата
+          th Наименование
+          th Количество
+      tbody
+        - @requests.each do |request|
+          - request.request_positions.each_with_index do |position, index|
+              tr class="#{ index == 0 ? request.status : ''}"
+                td = index == 0 ? request_status(request.status) : ''
+                td = index == 0 ? request.created_at.strftime("%R %D") : ''
+                td = position.article.name
+                td = position.quantity
+.row
+  .col-md-6
+    h2
+      |Товары 
+      small
+        = link_to 'Все', admin_products_path
+    table.products.table
+      thead
+        tr
+          th Наименование
+          th Цена
+          th Количество
+      tbody
+        - @products.each do |product|
+          tr
+            td = product.article.name
+            td = product.price
+            td = product.product_stack.quantity
+  .col-md-6
+    h2
+      |Заказы 
+      small
+        = link_to 'Все', admin_orders_path
+    table.orders.table
+      thead
+        tr
+          th Дата
+          th Наименование
+          th Количество
+      tbody
+        - @orders.each do |order|
+          tr
+            td = order.article.name
+            td = order.price
+            td = order.product_stack.quantity

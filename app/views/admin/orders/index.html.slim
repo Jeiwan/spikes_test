@@ -1,0 +1,16 @@
+h1 Заказы
+
+table.orders.table
+  thead
+    tr
+      th Дата
+      th Наименование
+      th Количество
+  tbody
+    - @orders.each do |order|
+      tr
+        td = order.article.name
+        td = order.price
+        td = order.product_stack.quantity
+
+= paginate @orders

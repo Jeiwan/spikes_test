@@ -3,6 +3,11 @@ class OrdersController < ApplicationController
 
   authorize_resource
 
+  def index_admin
+    @orders = Order.page(params[:page])
+    render 'admin/orders/index'
+  end
+
   def create
     unless session[:cart].blank?
       order = current_user.orders.create

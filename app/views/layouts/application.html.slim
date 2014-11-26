@@ -12,6 +12,18 @@ html lang="en"
       .container
         .navbar-header
           = link_to "7Pikes Test", root_path, class: "navbar-brand"
+        - if user_signed_in? && current_user.admin?
+          ul.nav.navbar-nav.navbar-left
+            li class=(is_active?('admin/dashboard'))
+              = link_to 'Админ-панель', admin_dashboard_path
+            li class=(is_active?('admin/invoices'))
+              = link_to 'Накладные', admin_invoices_path
+            li class=(is_active?('admin/requests'))
+              = link_to 'Заявки', admin_requests_path
+            li class=(is_active?('products', 'index_admin'))
+              = link_to 'Товары', admin_products_path
+            li class=(is_active?('orders', 'index_admin'))
+              = link_to 'Заказы', admin_orders_path
         ul.nav.navbar-nav.navbar-right
           - unless user_signed_in?
             li
@@ -30,5 +42,6 @@ html lang="en"
     .container
       header
         = render 'layouts/flash'
-      section
+      section.row
         = yield
+      footer

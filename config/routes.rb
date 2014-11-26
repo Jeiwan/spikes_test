@@ -1,17 +1,25 @@
 Rails.application.routes.draw do
+  get 'dashboard/show'
+
   devise_for :users
 
-  namespace :admin do
-    resources :invoices, only: [:index, :new, :create]
-    resources :requests, only: [:index, :new, :create] do
-      resources :invoices, only: [:new, :create]
+  authenticate :user, lambda { |u| u.admin?  } do
+    namespace :admin do
+      resources :invoices, only: [:index, :new, :create]
+      resources :requests, only: [:index, :new, :create] do
+        resources :invoices, only: [:new, :create]
+      end
+      resource :dashboard, only: [:show], controller: :dashboard
+      patch "/settings/threshold" => "settings#set_threshold", as: :settings_threshold
+      post "/requests/merge" => "requests#merge", as: :merge_requests
+
+      root to: 'admin/dashboard#show'
     end
-    patch "/settings/threshold" => "settings#set_threshold", as: :settings_threshold
-    post "/requests/merge" => "requests#merge", as: :merge_requests
-  end
-  scope :admin do
-    get "/products" => "products#index_admin", as: :admin_products
-    patch "/products/:id/set_quantity_threshold" => "products#set_quantity_threshold", as: :admin_set_product_quantity_threshold
+    scope :admin do
+      get "/orders" => "orders#index_admin", as: :admin_orders
+      get "/products" => "products#index_admin", as: :admin_products
+      patch "/products/:id/set_quantity_threshold" => "products#set_quantity_threshold", as: :admin_set_product_quantity_threshold
+    end
   end
 
   resources :users, only: [:show]
