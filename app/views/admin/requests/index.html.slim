@@ -1,13 +1,13 @@
 h1
-  |Заявки на поставку
+  |Заявки на поставку 
   = link_to "Создать заявку", "#", class: "btn btn-primary"
 
 = form_tag admin_settings_threshold_path, id: "quantity_threshold", method: :patch, remote: true, type: :js
   .row
     .col-md-12
       = label_tag "Минимальное количество товара, после достижения которого автоматически создается заявка на поставку:"
-      = text_field_tag :threshold, @settings[:quantity_threshold]
-      = submit_tag "Установить"
+      = text_field_tag :threshold, @settings[:quantity_threshold], class: 'form-control'
+      = submit_tag "Установить", class: 'btn btn-sm btn-default'
       span.status
         span.ok.text-success
           span.glyphicon.glyphicon-ok
@@ -36,6 +36,6 @@ h1
               td = position.article.name
               td = position.quantity
               td = index == 0 ? request_controls(request) : ''
-  = submit_tag "Объединить заявки"
+  = submit_tag "Объединить заявки", class: 'btn btn-primary'
 
 = paginate @requests

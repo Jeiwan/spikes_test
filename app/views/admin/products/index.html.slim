@@ -15,5 +15,5 @@ table.products.table
         td = product.price
         td
           = form_for product, url: admin_set_product_quantity_threshold_path(product.id), method: :patch, remote: true do |f|
-            = f.text_field :quantity_threshold
-            = f.submit "Задать"
+            = f.text_field :quantity_threshold, class: 'form-control'
+            = f.submit "Задать", class: 'btn btn-sm btn-default'

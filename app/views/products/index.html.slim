@@ -3,8 +3,9 @@
     h3.name
       = product.name
     strong.price
+      |Цена: 
       = product.price
     - if session[:cart].nil? || session[:cart].select { |product_in_cart| product_in_cart['id'] == product['id']  }.empty?
-      = link_to "В корзину", product_add_to_cart_path(product.id), method: :post, remote: true, type: :js, class: "add_to_cart"
+      = link_to "В корзину", product_add_to_cart_path(product.id), method: :post, remote: true, type: :js, class: "add_to_cart btn btn-primary"
     - else
       span.in_cart В корзине

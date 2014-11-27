@@ -19,4 +19,4 @@ h1 Корзина
           td = product["price"]
           td = product["price"]
           td = link_to "Убрать", product_remove_from_cart_path(product["id"]), remote: true, method: :post, type: :js
-  = link_to "Оформить", orders_path, method: :post, class: 'btn btn-primary pull-right'
+  = link_to "Оформить", orders_path, method: :post, class: 'btn btn-primary pull-right', id: 'make_order'
