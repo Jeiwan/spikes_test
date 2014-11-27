@@ -1,12 +1,12 @@
 source 'https://rubygems.org'
 gem 'rails', '4.1.6'
 
-gem 'mysql2'
 
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'quiet_assets'
+  gem 'mysql2'
 end
 
 group :test do
@@ -19,6 +19,11 @@ group :test do
   gem 'launchy'
 	gem 'rspec-rails'
 	gem 'shoulda-matchers'
+end
+
+group :productio do
+  gem 'pg'
+  gem 'rails_12factor'
 end
 
 gem 'cancancan'

@@ -26,8 +26,9 @@ test:
   database: 7pikes_test_test
 
 production:
-  adapter: mysql
-  host: localhost
-  database: 
-  username: 
-  password: 
+  adapter: postgersql
+  host: <%= ENV['POSTGRES_HOST'] %>
+  database: <%= ENV['POSTGRES_DB'] %>
+  username: <%= ENV['POSTGRES_USERNAME'] %> 
+  password: <%= ENV['POSTGRES_PASSWORD'] %>
+  pool: 5
