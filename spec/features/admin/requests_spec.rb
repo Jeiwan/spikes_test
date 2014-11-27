@@ -131,4 +131,31 @@ feature "Requests" do
     expect(page).to have_content "объединены"
     expect(page).to have_selector "tr.fresh", count: 1
   end
+
+  scenario "Admin edits new created request", js: true do
+    visit admin_requests_path
+
+    within('.all-requests') do
+      first(:link, text: 'Редактировать').click
+    end
+    expect(page.current_path).to match /\A\/admin\/requests\/\d+\/edit\z/
+    expect(page).to have_content 'Редактировать заявку'
+    within("form .nested-fields:first-child") do
+      fill_in 'Количество', with: 575
+    end
+    click_button 'Редактировать'
+    expect(page.current_path).to match /\A\/admin\/requests\z/
+    expect(page).to have_content 'отредактирована'
+    expect(page).to have_content '575'
+  end
+
+  scenario "Admin confirm new created request" do
+    visit admin_requests_path
+
+    within(".all-requests") do
+      first(:link, text: 'Подтвердить').click
+    end
+    expect(page.current_path).to match /\A\/admin\/requests\z/
+    expect(page).to have_content 'подтверждена'
+  end
 end

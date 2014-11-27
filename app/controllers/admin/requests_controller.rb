@@ -1,6 +1,8 @@
 class Admin::RequestsController < ApplicationController
   before_action :authenticate_user!
   before_action :load_settings, only: [:index]
+  before_action :load_request, only: [:edit, :update, :confirm]
+  before_action :load_articles, only: [:new, :edit]
 
   authorize_resource
 
@@ -9,13 +11,11 @@ class Admin::RequestsController < ApplicationController
   end
 
   def new
-    @articles = Article.all
     @request = Admin::Request.new
     @request.request_positions.new
   end
 
   def create
-    @requests = Admin::Request.all
     @request = Admin::Request.new(request_params)
 
     if @request.save
@@ -24,6 +24,19 @@ class Admin::RequestsController < ApplicationController
     else
       flash.now[:danger] = "Ошибка в создании запроса"
       render :new
+    end
+  end
+
+  def edit
+  end
+
+  def update
+    if @request.update(request_params)
+      flash[:success] = 'Заявка отредактирована'
+      redirect_to admin_requests_path
+    else
+      flash.now[:danger] = 'Ошибка при редактировании заявки'
+      render :edit
     end
   end
 
@@ -36,10 +49,16 @@ class Admin::RequestsController < ApplicationController
     end
   end
 
+  def confirm
+    @request.pending!
+    flash[:success] = 'Заявка подтверждена'
+    redirect_to admin_requests_path
+  end
+
   private
 
     def request_params
-      params.require(:admin_request).permit(request_positions_attributes: [:article_id, :quantity, :_destroy])
+      params.require(:admin_request).permit(request_positions_attributes: [:id, :article_id, :quantity, :_destroy])
     end
 
     def load_settings
@@ -47,5 +66,13 @@ class Admin::RequestsController < ApplicationController
       Admin::Setting.find_each do |settings|
         @settings[settings.name.to_sym] = settings.value
       end
+    end
+
+    def load_request
+      @request = Admin::Request.find(params[:request_id] || params[:id])
+    end
+
+    def load_articles
+      @articles = Article.all
     end
 end

@@ -6,12 +6,13 @@ Rails.application.routes.draw do
   authenticate :user, lambda { |u| u.admin?  } do
     namespace :admin do
       resources :invoices, only: [:index, :new, :create]
-      resources :requests, only: [:index, :new, :create] do
+      resources :requests, only: [:index, :new, :create, :edit, :update] do
         resources :invoices, only: [:new, :create]
+        post "/merge" => "requests#merge", as: :merge, on: :collection
+        patch "/confirm" => "requests#confirm", as: :confirm
       end
       resource :dashboard, only: [:show], controller: :dashboard
       patch "/settings/threshold" => "settings#set_threshold", as: :settings_threshold
-      post "/requests/merge" => "requests#merge", as: :merge_requests
 
       root to: 'admin/dashboard#show'
     end

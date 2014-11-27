@@ -1,4 +1,4 @@
-h1 Новая заявка
+h1 Редактировать заявку
 
 = simple_form_for @request do |f|
   = f.error_notification
@@ -8,4 +8,4 @@ h1 Новая заявка
       = render "request_position_fields", f: request_position
     .links
       = link_to_add_association "Добавить позицию", f, :request_positions
-  = f.submit "Создать", class: "btn btn-success"
+  = f.submit "Редактировать", class: "btn btn-success"

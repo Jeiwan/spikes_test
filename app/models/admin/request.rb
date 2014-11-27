@@ -2,7 +2,7 @@ class Admin::Request < ActiveRecord::Base
 
   has_one :invoice, class_name: "Admin::Invoice"
   has_many :request_positions, class_name: "Admin::RequestPosition"
-  accepts_nested_attributes_for :request_positions
+  accepts_nested_attributes_for :request_positions, allow_destroy: true
 
   enum status: {fresh: 0, pending: 1, executed: 2}
 
