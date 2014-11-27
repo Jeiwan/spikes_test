@@ -9,16 +9,24 @@ class Admin::Request < ActiveRecord::Base
   def self.merge(requests)
     if requests
       merged_request = Admin::Request.new
-      request_positions = []
-      requests.each do |request_id|
-        request_to_merge = Admin::Request.find(request_id.to_i)
-        request_to_merge.request_positions.find_each do |request_position|
-          request_positions << request_position.attributes.select { |key| ["article_id", "quantity"].include?(key) }
-        end
-        request_to_merge.destroy
-      end
-      merged_request.request_positions_attributes = request_positions
+      merged_request.request_positions_attributes = get_positions_from_requests(requests)
       merged_request.save
     end
   end
+
+  private
+
+    def self.get_positions_from_requests(requests)
+      requests.inject([]) do |all_positions, request_id|
+        all_positions += collect_positions_from_request(Admin::Request.find(request_id.to_i))
+      end
+    end
+
+    def self.collect_positions_from_request(request)
+      positions = request.request_positions.map do |request_position|
+        request_position.attributes.select { |key| ["article_id", "quantity"].include?(key) }
+      end
+      request.destroy
+      positions
+    end
 end

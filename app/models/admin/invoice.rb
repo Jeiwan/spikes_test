@@ -11,8 +11,6 @@ class Admin::Invoice < ActiveRecord::Base
   private
 
     def execute_request
-      unless self.request_id.nil?
-        request.executed!
-      end
+      request.executed! unless self.request.nil?
     end
 end
