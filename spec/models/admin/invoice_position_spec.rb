@@ -21,29 +21,20 @@ RSpec.describe Admin::InvoicePosition, :type => :model do
     end
 
     context "when product doesn't exist" do
-      it "creates a new product stack" do
-        expect{invoice_position.save}.to change(ProductStack, :count).by(1)
-      end
-
       it "creates a new product" do
         expect{invoice_position.save}.to change(Product, :count).by(1)
       end
     end
 
     context "when product already exists" do
-      let(:product) { create(:product, article: article, name: article.name) }
-      let!(:product_stack) { create(:product_stack, product: product)  }
+      let!(:product) { create(:product, article: article, name: article.name) }
 
-      it "doesn't create a new product stack" do
-        expect{invoice_position.save}.not_to change(ProductStack, :count)
-      end
-
-      it "doesn't a new product" do
+      it "doesn't create a new product" do
         expect{invoice_position.save}.not_to change(Product, :count)
       end
 
-      it "increases quantity in a stack" do
-        expect{invoice_position.save}.to change{product_stack.reload.quantity}.by(invoice_position.quantity)
+      it "increases quantity" do
+        expect{invoice_position.save}.to change{product.reload.quantity}.by(invoice_position.quantity)
       end
     end
   end

@@ -17,11 +17,11 @@ feature "Prodct Limit" do
     expect(page).to have_content "Минимальный остаток"
 
     within(".products tbody tr:first-child") do
-      fill_in "product_stack_quantity_threshold", with: 5
+      fill_in "product_quantity_threshold", with: 5
       click_button "Задать"
     end
 
     expect(page).to have_content "задан"
-    expect(page).to have_selector ".products tbody tr:first-child", text: product.product_stack.quantity_threshold
+    expect(page).to have_selector ".products tbody tr:first-child", text: product.quantity_threshold
   end
 end

@@ -17,7 +17,7 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:product_id])
     if @product
       session[:cart] ||= []
-      session[:cart] << {name: @product.name, id: @product.id, article: @product.article_id, stack: @product.product_stack_id, price: @product.price, quantity: 1}
+      session[:cart] << {name: @product.name, id: @product.id, article: @product.article_id, price: @product.price, quantity: 1}
     end
   end
 
@@ -29,13 +29,13 @@ class ProductsController < ApplicationController
 
   def set_quantity_threshold
     @product = Product.find(params[:id])
-    @product.product_stack.update!(product_stack_params)
+    @product.update!(product_params)
     render "admin/products/set_quantity_threshold"
   end
 
   private
   
-    def product_stack_params
-      params.require(:product_stack).permit(:quantity_threshold)
+    def product_params
+      params.require(:product).permit(:quantity_threshold)
     end
 end

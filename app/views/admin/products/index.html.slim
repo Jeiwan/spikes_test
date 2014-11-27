@@ -11,9 +11,9 @@ table.products.table
     - @products.each do |product|
       tr
         td = product.article.name
-        td = product.product_stack.quantity
+        td = product.quantity
         td = product.price
         td
-          = form_for product.product_stack, url: admin_set_product_quantity_threshold_path(product.id), method: :patch, remote: true do |f|
+          = form_for product, url: admin_set_product_quantity_threshold_path(product.id), method: :patch, remote: true do |f|
             = f.text_field :quantity_threshold
             = f.submit "Задать"

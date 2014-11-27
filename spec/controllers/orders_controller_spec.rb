@@ -38,8 +38,8 @@ RSpec.describe OrdersController, :type => :controller do
       context "when cart is not empty" do
         before do
           session[:cart] = []
-          session[:cart] << {"name" => product1.name, "id" => product1.id, "article" => product1.article_id, "stack" => product1.product_stack_id, "price" => product1.price, "quantity" => 1}
-          session[:cart] << {"name" => product2.name, "id" => product2.id, "article" => product2.article_id, "stack" => product2.product_stack_id, "price" => product2.price, "quantity" => 1}
+          session[:cart] << {"name" => product1.name, "id" => product1.id, "article" => product1.article_id, "price" => product1.price, "quantity" => 1}
+          session[:cart] << {"name" => product2.name, "id" => product2.id, "article" => product2.article_id, "price" => product2.price, "quantity" => 1}
         end
 
         it "creates a new order" do
@@ -52,8 +52,8 @@ RSpec.describe OrdersController, :type => :controller do
 
         it "decrements product quantity" do
           post_create
-          expect(product1.product_stack.reload.quantity).to eq 10
-          expect(product2.product_stack.reload.quantity).to eq 10
+          expect(product1.reload.quantity).to eq 10
+          expect(product2.reload.quantity).to eq 10
         end
 
         it "redirects to root_path" do

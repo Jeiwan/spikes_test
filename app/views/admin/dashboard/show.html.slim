@@ -57,7 +57,7 @@ h1 Админ-панель
           tr
             td = product.article.name
             td = product.price
-            td = product.product_stack.quantity
+            td = product.quantity
   .col-md-6
     h2
       |Заказы 
@@ -74,4 +74,4 @@ h1 Админ-панель
           tr
             td = order.article.name
             td = order.price
-            td = order.product_stack.quantity
+            td = order.product.quantity

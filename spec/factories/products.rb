@@ -2,9 +2,10 @@
 
 FactoryGirl.define do
   factory :product do
-    sequence(:name) { |n| "product#{n}" }
+    #sequence(:name) { |n| "product#{n}" }
     price 1.5
+    quantity 11
     article
-    product_stack { create(:product_stack, quantity: 11) }
+    name { article.name }
   end
 end

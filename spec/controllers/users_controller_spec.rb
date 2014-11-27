@@ -9,11 +9,11 @@ RSpec.describe UsersController, :type => :controller do
     let(:products) { create_list(:product, 5)  }
     let(:get_cart) { get :cart  }
     let(:product1_in_cart) do
-      {"name" => products[0].name, "id" => products[0].id, "article" => products[0].article_id, "stack" => products[0].product_stack_id, "price" => products[0].price, "quantity" => 1}
+      {"name" => products[0].name, "id" => products[0].id, "article" => products[0].article_id, "price" => products[0].price, "quantity" => 1}
     end
 
     let(:product2_in_cart) do
-      {"name" => products[1].name, "id" => products[1].id, "article" => products[1].article_id, "stack" => products[1].product_stack_id, "price" => products[1].price, "quantity" => 1}
+      {"name" => products[1].name, "id" => products[1].id, "article" => products[1].article_id, "price" => products[1].price, "quantity" => 1}
     end
 
     before do

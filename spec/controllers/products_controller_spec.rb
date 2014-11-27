@@ -67,7 +67,7 @@ RSpec.describe ProductsController, :type => :controller do
       end
 
       it "adds the product to the cart" do
-        expect(session[:cart][0]).to eq({name: product.name, id: product.id, article: product.article_id, stack: product.product_stack_id, price: product.price, quantity: 1})
+        expect(session[:cart][0]).to eq({name: product.name, id: product.id, article: product.article_id, price: product.price, quantity: 1})
       end
     end
 
@@ -86,7 +86,7 @@ RSpec.describe ProductsController, :type => :controller do
 
     before do
       session[:cart] = []
-      session[:cart] << {name: product.name, id: product.id, article: product.article_id, stack: product.product_stack_id, price: product.price, quantity: 1}
+      session[:cart] << {name: product.name, id: product.id, article: product.article_id, price: product.price, quantity: 1}
       post_remove_from_cart
     end
 
@@ -106,7 +106,7 @@ RSpec.describe ProductsController, :type => :controller do
   describe "PATCH #set_quantity_threshold" do
     let(:product) { create(:product) }
     let(:patch_set_quantity_threshold) do
-      patch :set_quantity_threshold, id: product.id, product_stack: { quantity_threshold: 50 }, format: :js
+      patch :set_quantity_threshold, id: product.id, product: {quantity_threshold: 50}, format: :js
     end
 
     context "when signed in", sign_in: true do
@@ -114,7 +114,7 @@ RSpec.describe ProductsController, :type => :controller do
         let(:user) { create(:user, admin: true) }
         it "updates product stack" do
           patch_set_quantity_threshold
-          expect(product.product_stack.reload.quantity_threshold).to eq 50
+          expect(product.reload.quantity_threshold).to eq 50
         end
 
         it "renders set_quantity_threshold" do

@@ -11,6 +11,6 @@ table.orders.table
       tr
         td = order.article.name
         td = order.price
-        td = order.product_stack.quantity
+        td = order.product.quantity
 
 = paginate @orders

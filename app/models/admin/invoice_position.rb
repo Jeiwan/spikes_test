@@ -12,12 +12,14 @@ class Admin::InvoicePosition < ActiveRecord::Base
   private
 
     def create_product
-      product = Product.find_or_initialize_by(article_id: article_id)
+      product = Product.find_or_initialize_by(article: article)
       if product.new_record?
-        product_stack = ProductStack.create(quantity: quantity)
-        product_stack.create_product(article_id: article_id, name: self.article.name, price: price)
+        product.name = article.name
+        product.price = price
+        product.quantity = quantity
+        product.save
       else
-        product.product_stack.increment!(:quantity, quantity)
+        product.increment!(:quantity, quantity)
       end
     end
 end
