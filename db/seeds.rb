@@ -10,3 +10,7 @@ require 'faker'
 50.times do
   Article.create(name: Faker::Commerce.product_name)
 end
+
+User.create(username: 'admin', password: 'adminadmin', admin: true)
+User.create(username: 'buyer', password: 'buyerbuyer')
+Admin::Setting.create(name: "quantity_threhsold", value: "10")

@@ -8,9 +8,11 @@ table.orders.table
       th Количество
   tbody
     - @orders.each do |order|
-      tr
-        td = order.article.name
-        td = order.price
-        td = order.product.quantity
+      - order.order_positions.each_with_index do |position, index|
+          tr
+            td = index == 0 ? order.created_at.strftime("%R %D") : ''
+            td = position.article.name
+            td = position.quantity
+            td = position.price
 
 = paginate @orders

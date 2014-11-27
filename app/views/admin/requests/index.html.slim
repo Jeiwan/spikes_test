@@ -1,6 +1,6 @@
 h1
   |Заявки на поставку 
-  = link_to "Создать заявку", "#", class: "btn btn-primary"
+  = link_to "Создать заявку", new_admin_request_path, class: "btn btn-primary"
 
 = form_tag admin_settings_threshold_path, id: "quantity_threshold", method: :patch, remote: true, type: :js
   .row

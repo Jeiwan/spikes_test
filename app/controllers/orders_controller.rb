@@ -12,6 +12,7 @@ class OrdersController < ApplicationController
     unless session[:cart].blank?
       order = current_user.orders.create
       order.fill_from_cart(session[:cart])
+      session[:cart] = []
       flash[:success] = "Заказ оформлен"
     end
     redirect_to root_path
