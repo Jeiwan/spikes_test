@@ -13,4 +13,4 @@ end
 
 User.create(username: 'admin', password: 'adminadmin', admin: true)
 User.create(username: 'buyer', password: 'buyerbuyer')
-Admin::Setting.create(name: "quantity_threhsold", value: "10")
+Admin::Setting.create(name: "quantity_threshold", value: "10")
