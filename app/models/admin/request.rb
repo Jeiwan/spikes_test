@@ -14,6 +14,14 @@ class Admin::Request < ActiveRecord::Base
     end
   end
 
+  def build_invoice_and_add_positions
+    new_invoice = build_invoice
+    new_invoice.invoice_positions_attributes = self.request_positions.map do |request_position|
+      {article_id: request_position.id, quantity: request_position.quantity}
+    end
+    new_invoice
+  end
+
   private
 
     def self.get_positions_from_requests(requests)

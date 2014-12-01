@@ -11,6 +11,6 @@ class Admin::Invoice < ActiveRecord::Base
   private
 
     def execute_request
-      request.executed! unless self.request.nil?
+      request.executed! if request.present?
     end
 end

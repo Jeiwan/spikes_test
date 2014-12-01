@@ -11,10 +11,7 @@ class Admin::InvoicesController < ApplicationController
 
     if params[:request_id]
       @request = Admin::Request.find(params[:request_id])
-      @invoice = @request.build_invoice
-      @invoice.invoice_positions_attributes = @request.request_positions.map do |request_position|
-        {article_id: request_position.id, quantity: request_position.quantity}
-      end
+      @invoice = @request.build_invoice_and_add_positions
     else
       @invoice = Admin::Invoice.new
       @invoice.invoice_positions.new
@@ -31,7 +28,6 @@ class Admin::InvoicesController < ApplicationController
 
     if @invoice.save
       flash[:success] = "Накладная приходована"
-      @invoice.request.executed! if @invoice.request_id
       redirect_to admin_invoices_path
     else
       flash.now[:danger] = "Ошибка в приходовании накладной"

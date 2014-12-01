@@ -7,6 +7,14 @@ RSpec.describe Admin::Request, :type => :model do
   it { is_expected.to accept_nested_attributes_for :request_positions }
 
   describe "methods" do
+    describe "#build_invoice_and_add_positions" do
+      let!(:request) { create(:admin_request) }
+
+      it "returns a new invoice" do
+        expect(request.build_invoice_and_add_positions).to be_a Admin::Invoice
+      end
+    end
+
     describe ".merge(requests)" do
       let!(:requests) { create_list(:admin_request, 2) }
 
